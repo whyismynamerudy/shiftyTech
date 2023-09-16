@@ -2,7 +2,6 @@ import tensorflow as tf
 import tensorflow_hub as hub
 import numpy as np
 from sklearn import neighbors
-from scipy.stats import mode
 
 
 K = 1

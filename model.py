@@ -134,6 +134,10 @@ def read_and_preprocess_image(path, to_rotate=True):
     return tf.expand_dims(image, axis=0)
 
 
+def preprocess_image_from_cv(image):
+    return tf.expand_dims(tf.image.resize_with_pad(image, 192, 192), axis=0)
+
+
 def extract_keypoints(image):
     """Extracts keypoints from the image using the MoveNet model."""
     outputs = movenet(image)
@@ -209,28 +213,47 @@ def store_mocks():
 
 # store_mocks()
 
-folder_path = './images'
-all_images = get_all_images_from_folder(folder_path)
+############## USEFUL CODE ABOVE #################
 
-print("Images we are referencing: ", all_images)
+'''
+Below:
+    . given input image, call the respective function and return its predicted output.
+'''
 
-# Assuming `get_vector` and `search_nearest_vector` are already defined in your script
-similarity_results = {}
 
-for image in all_images:
-    image_path = os.path.join(folder_path, image)
-    vector = get_vector(image_path).numpy().flatten()
+def estimate(image):
+    # image is numpy.ndarray of shape (1080, 1920, 3) from frame ret value of cv2.read()
+    keypoints = extract_keypoints(preprocess_image_from_cv(image))
+    vector = process_keypoints(keypoints)
+    normalized_vector = normalize_vector(vector)
 
-    # Perform similarity search
-    img = search_nearest_vector(vector)
+    return search_nearest_vector(normalized_vector)
 
-    # Store the results
-    similarity_results[image] = img.entity.get('image_name')
 
-for image, similar_imgs in similarity_results.items():
-    print(f"Image: {image}")
-    print(f"Most similar images: {similar_imgs}")
-    print("----------")
+# folder_path = './images'
+# all_images = get_all_images_from_folder(folder_path)
+#
+# print("Images we are referencing: ", all_images)
+#
+# # Assuming `get_vector` and `search_nearest_vector` are already defined in your script
+# similarity_results = {}
+#
+# for image in all_images:
+#     image_path = os.path.join(folder_path, image)
+#     vector = get_vector(image_path).numpy().flatten()
+#
+#     # Perform similarity search
+#     img = search_nearest_vector(vector)
+#
+#     # Store the results
+#     similarity_results[image] = img.entity.get('image_name')
+#
+# for image, similar_imgs in similarity_results.items():
+#     print(f"Image: {image}")
+#     print(f"Most similar images: {similar_imgs}")
+#     print("----------")
 
 if __name__ == '__main__':
-    print('Done')
+    print('don\'t run me :(')
+    print('but now you did, im storing image vectors in milvus')
+    store_mocks()

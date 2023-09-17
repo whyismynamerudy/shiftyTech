@@ -5,7 +5,7 @@ function Navbar() {
         <div className="flex min-h-min flex-row justify-between items-center p-9">
             <div className="inline-flex items-center m-3">
                 <a href="/">
-                <Image src="/LightJort.svg" height={90} width={90} alt="Shifty Tech Logo" />
+                <Image src="/Jort.svg" height={90} width={90} alt="Shifty Tech Logo" />
                 </a>
                 <a href="/">
                 <h1 className="pl-9 font-han text-5xl">

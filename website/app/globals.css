@@ -7,6 +7,10 @@
   --background-rgb: 87, 0, 57;
 }
 
+td, th {
+  vertical-align:top;
+  }
+  
 body {
   color: rgb(var(--foreground-rgb));
   background: rgb(var(--background-rgb));

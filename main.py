@@ -1,5 +1,3 @@
-# Here's the updated code:
-
 import webbrowser
 import pyautogui
 import time

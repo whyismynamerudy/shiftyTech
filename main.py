@@ -89,7 +89,10 @@ def main():
             record = closest_pose
 
             if to_skip:
-                record = pose_mapping['not ' + record]
+                try:
+                    record = pose_mapping['not ' + record]
+                except:
+                    record = pose_mapping['not'] + pose_mapping[record]
                 to_skip = False
             else:
                 record = pose_mapping[record]

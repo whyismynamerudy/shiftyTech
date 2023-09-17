@@ -34,7 +34,6 @@ def main():
 
     shifty_collection = Collection(collection_name)
 
-
     url = "https://replit.com/join/fmrnbraiil-rudrakshmonga1"
     webbrowser.open(url)
 
@@ -56,7 +55,6 @@ def main():
         # Create an image with the same dimensions as the frame for the text overlay
         overlay = frame.copy()
 
-
         # Add text indicating the time left until the next frame capture
         text = f"Next frame in {int(time_left) + 1}"
         cv2.putText(overlay, text, (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 2.5, (255, 255, 255), 2)
@@ -66,7 +64,6 @@ def main():
         cv2.addWeighted(overlay, alpha, frame, 1 - alpha, 0, frame)
 
         cv2.imshow('frame', frame)
-
 
         if time_left <= 0:
             # Capture a frame and reset the start time for the next frame capture

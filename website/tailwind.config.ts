@@ -11,6 +11,12 @@ const config: Config = {
       fontFamily: {
         'han': "var(--font-black-han-sans)",
         'lato': "var(--font-lato)",
+      },
+      colors: {
+        'teal': "#0A535E",
+        'teal-hover': "#023F49",
+        'crimson': "#AE003A",
+        'crimson-hover': "#83022D",
       }
     },
   },

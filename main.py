@@ -21,6 +21,9 @@ def main():
     cfp = configparser.RawConfigParser()
     cfp.read('config_serverless.ini')
 
+    operations = []
+    to_skip: bool = False
+
     # Connect to milvus
     milvus_uri = cfp.get('example', 'uri')
     token = cfp.get('example', 'token')
@@ -84,7 +87,19 @@ def main():
 
             closest_pose = closest_pose.replace('.jpg', '')
 
-            pyautogui.write(pose_mapping[closest_pose])
+            operations.append(pose_mapping[closest_pose])
+
+            if to_skip:
+                pyautogui.write(operations[-1])
+                to_skip = False
+
+            if operations[-1] == 'not':
+                to_skip = True
+
+            if not to_skip:
+                pyautogui.write(pose_mapping[closest_pose])
+
+
 
             start_time = time.time()
 

@@ -2,7 +2,7 @@ import Navbar from "@/components/navbar"
 import React from "react";
 // import Webcam from "react-webcam";
 
-const WebcamComponent = () => <Webcam />;
+// const WebcamComponent = () => <Webcam />;
 
 export default function Install() {
   return (

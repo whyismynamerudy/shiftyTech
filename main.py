@@ -4,6 +4,7 @@ import time
 import cv2
 import tensorflow as tf
 
+from compiler.mapping import pose_mapping
 from move_net.estimation import input_size, movenet
 from move_net.helper import draw_prediction_on_image
 from move_net.image_utils import get_vector_from_frame
@@ -81,7 +82,9 @@ def main():
             vector_representation = get_vector_from_frame(frame)
             closest_pose = search_for_pose(vector_representation, shifty_collection)
 
-            print(closest_pose)
+            closest_pose = closest_pose.replace('.jpg', '')
+
+            pyautogui.write(pose_mapping[closest_pose])
 
             start_time = time.time()
 

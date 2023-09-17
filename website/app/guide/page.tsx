@@ -1,4 +1,5 @@
 import Navbar from "@/components/navbar"
+import Guidebook from "@/components/guidebook"
 
 export default function Guide() {
   return (
@@ -12,9 +13,10 @@ export default function Guide() {
           SHIFTY TECH
         </h2>
         <p className="pt-5 pl-9 font-lato text-xl text-center">
-          Sick of excruciating back pain and the constant grindset? Let yourself have fun and loosen up those muscles by dancing your work away!
+          Make sure that your image looks like the following to correctly write your code!
         </p>
       </div>
+      <Guidebook />
     </main>
   )
 }

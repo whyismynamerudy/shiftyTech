@@ -179,7 +179,7 @@ function Guidebook() {
                     </td>
                     <td>
                         <h2 className="pt-7 pl-7 font-han text-3xl">"HELLO WORLD!"</h2>
-                        <p className="pt-3 pl-7 font-lato text-xl">Make a Wheeeee Pose to write "Hello World!".</p>
+                        <p className="pt-3 pl-7 font-lato text-xl">Make a Wheeeee Pose to write &quot;Hello World!&quot;.</p>
                     </td>
                 </tr>
                 <tr>

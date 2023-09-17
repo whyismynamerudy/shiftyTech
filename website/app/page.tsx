@@ -24,12 +24,12 @@ export default function Home() {
           Sick of excruciating back pain and the constant grindset? Let yourself have fun and loosen up those muscles by dancing your work away!
         </p>
         <a className="pt-5" href="/demo">
-          <button className="bg-teal hover:bg-teal-hover py-4 px-6 rounded-lg shadow-xl">
+          <button className="text-pink bg-teal hover:bg-teal-hover py-4 px-6 rounded-lg shadow-xl">
             TRY IT YOURSELF
           </button>
         </a>
         <a className="pt-5" href="/guide">
-          <button className="bg-crimson hover:bg-crimson-hover py-2 px-4 rounded-lg shadow-xl">
+          <button className="text-pink bg-crimson hover:bg-crimson-hover py-2 px-4 rounded-lg shadow-xl">
             WATCH DEMO
           </button>
         </a>

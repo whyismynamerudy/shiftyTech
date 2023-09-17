@@ -13,6 +13,7 @@ const config: Config = {
         'lato': "var(--font-lato)",
       },
       colors: {
+        'pink': "#F2C8D7",
         'teal': "#0A535E",
         'teal-hover': "#023F49",
         'crimson': "#AE003A",

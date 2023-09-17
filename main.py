@@ -114,7 +114,14 @@ def main():
                 cv2.waitKey(2)  # Display for a short time. Adjust as needed.
 
             if not to_skip:
-                pyautogui.write(record)
+                if record == 'Backspace':
+                    pyautogui.press('Backspace')
+                elif record == 'Up':
+                    pyautogui.press('Up')
+                elif record == 'Down':
+                    pyautogui.press('Down')
+                else:
+                    pyautogui.write(record)
 
             start_time = time.time()
 

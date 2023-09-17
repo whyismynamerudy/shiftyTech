@@ -115,13 +115,11 @@ def main():
 
             if not to_skip:
                 if record == 'Backspace':
-                    pyautogui.press('backspace')
+                    pyautogui.press('Backspace')
                 elif record == 'Up':
-                    pyautogui.press('up')
+                    pyautogui.press('Up')
                 elif record == 'Down':
-                    pyautogui.press('down')
-                elif record == "Right":
-                    pyautogui.press("right")
+                    pyautogui.press('Down')
                 else:
                     pyautogui.write(record)
 

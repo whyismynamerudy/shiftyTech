@@ -1,7 +1,7 @@
 pose_mapping = {
     "and": " and ",
     "bracket": "( ",
-    "not bracket": "Right ",
+    "not bracket": ") ",
     "colon": ": ",
     "divide": " / ",
     "else": "else",

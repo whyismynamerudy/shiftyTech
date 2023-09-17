@@ -4,6 +4,8 @@ import time
 import cv2
 import tensorflow as tf
 
+from move_net.estimation import input_size, movenet
+from move_net.helper import draw_prediction_on_image
 from move_net.image_utils import get_vector_from_frame
 from move_net.search_milvus import search_for_pose
 
@@ -62,6 +64,13 @@ def main():
         # Blend the overlay text onto the frame
         alpha = 0.6  # Adjust the transparency of the text
         cv2.addWeighted(overlay, alpha, frame, 1 - alpha, 0, frame)
+
+        # Run MoveNet inference on the current frame
+        input_image = tf.image.resize(frame, [input_size, input_size])
+        input_image = tf.expand_dims(input_image, axis=0)
+        keypoints_with_scores = movenet(input_image)
+        # Draw the keypoints onto the frame
+        frame = draw_prediction_on_image(frame, keypoints_with_scores)
 
         cv2.imshow('frame', frame)
 

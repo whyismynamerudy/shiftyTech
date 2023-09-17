@@ -84,7 +84,7 @@ def main():
 
             closest_pose = closest_pose.replace('.jpg', '')
 
-            operations.append(pose_mapping[closest_pose])
+            operations.append(closest_pose)
 
             record = closest_pose
 
@@ -98,13 +98,14 @@ def main():
                 to_skip = True
                 # Add a red border around the frame
                 border_thickness = 10
+                print("Not hit")
                 frame[:border_thickness, :] = [0, 0, 255]  # Top border
                 frame[-border_thickness:, :] = [0, 0, 255]  # Bottom border
                 frame[:, :border_thickness] = [0, 0, 255]  # Left border
                 frame[:, -border_thickness:] = [0, 0, 255]  # Right border
 
                 # Display the frame with the red border (Optional)
-                cv2.imshow('Red Bordered Frame', frame)
+                cv2.imshow('frame', frame)
                 cv2.waitKey(2)  # Display for a short time. Adjust as needed.
 
             if not to_skip:

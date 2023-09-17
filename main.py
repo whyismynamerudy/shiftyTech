@@ -45,11 +45,8 @@ def main():
 
     time.sleep(5)
 
-    pyautogui.click(x=558, y=318)
-    pyautogui.write("print('Hello Worlddd!')", interval=0.01)
-
     vid = cv2.VideoCapture(1)
-    frame_interval = 3  # Set the frame capture interval in seconds
+    frame_interval = 5  # Set the frame capture interval in seconds
     start_time = time.time()
 
     while True:
@@ -89,17 +86,29 @@ def main():
 
             operations.append(pose_mapping[closest_pose])
 
+            record = closest_pose
+
             if to_skip:
-                pyautogui.write(operations[-1])
+                record = pose_mapping['not ' + record]
                 to_skip = False
+            else:
+                record = pose_mapping[record]
 
             if operations[-1] == 'not':
                 to_skip = True
+                # Add a red border around the frame
+                border_thickness = 10
+                frame[:border_thickness, :] = [0, 0, 255]  # Top border
+                frame[-border_thickness:, :] = [0, 0, 255]  # Bottom border
+                frame[:, :border_thickness] = [0, 0, 255]  # Left border
+                frame[:, -border_thickness:] = [0, 0, 255]  # Right border
+
+                # Display the frame with the red border (Optional)
+                cv2.imshow('Red Bordered Frame', frame)
+                cv2.waitKey(2)  # Display for a short time. Adjust as needed.
 
             if not to_skip:
-                pyautogui.write(pose_mapping[closest_pose])
-
-
+                pyautogui.write(record)
 
             start_time = time.time()
 

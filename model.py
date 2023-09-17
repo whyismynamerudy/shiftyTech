@@ -134,10 +134,6 @@ def read_and_preprocess_image(path, to_rotate=True):
     return tf.expand_dims(image, axis=0)
 
 
-def preprocess_image_from_cv(image):
-    return tf.expand_dims(tf.image.resize_with_pad(image, 192, 192), axis=0)
-
-
 def extract_keypoints(image):
     """Extracts keypoints from the image using the MoveNet model."""
     outputs = movenet(image)
@@ -200,10 +196,12 @@ def store_vector_in_milvus(image_name, vector):
 def store_mocks():
     # List all images in the "mocks" folder
     mocks_folder = 'mocks'
-    all_images = [f for f in os.listdir(mocks_folder) if f.endswith('.jpg')]  # Assuming jpg images
+    all_images = [f for f in os.listdir(mocks_folder) if
+                  f.endswith('.jpg') or f.endswith('jpeg')]  # Assuming jpg images
 
     # For each image, extract its feature vector and store in MongoDB
     for image in all_images:
+        print("on image: ", image)
         image_path = os.path.join(mocks_folder, image)
         vector = get_vector(image_path, to_rotate=False)
         store_vector_in_milvus(image, vector)
@@ -221,13 +219,32 @@ Below:
 '''
 
 
-def estimate(image):
-    # image is numpy.ndarray of shape (1080, 1920, 3) from frame ret value of cv2.read()
-    keypoints = extract_keypoints(preprocess_image_from_cv(image))
+def estimate(frame):
+    # Convert the numpy frame to a TensorFlow tensor.
+    image_tensor = tf.convert_to_tensor(frame)
+
+    # Resize and preprocess the image for MoveNet.
+    preprocessed_image = tf.cast(tf.image.resize_with_pad(image_tensor, 192, 192), dtype=tf.int32)
+    preprocessed_image = tf.expand_dims(preprocessed_image, axis=0)
+
+    # Extract keypoints from the preprocessed image.
+    keypoints = extract_keypoints(preprocessed_image)
+
+    # Process and normalize the keypoints to get the vector.
     vector = process_keypoints(keypoints)
     normalized_vector = normalize_vector(vector)
 
-    return search_nearest_vector(normalized_vector)
+    # Convert the normalized vector to the appropriate format for Milvus search.
+    query_vector = normalized_vector.numpy().flatten().tolist()
+
+    # Search for the most similar vector in Milvus.
+    result = search_nearest_vector(query_vector)
+
+    # The result contains the most similar image's name from the Milvus collection.
+    # This assumes that the 'image_name' field in the Milvus collection refers to the name of the similar image.
+    similar_image_name = result.entity.get('image_name')
+
+    return similar_image_name
 
 
 # folder_path = './images'

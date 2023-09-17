@@ -6,9 +6,7 @@ export default function Home() {
       <Navbar />
      <div className="flex flex-row p-9">
       <div className="basis-1/2 flex flex-col m-3">
-        <video className="rounded-lg shadow-xl" autoPlay loop style={{ width: "auto", height: "auto" }}>
-          <source src="/temp.mp4" />
-        </video>
+        <iframe className="rounded-lg shadow-xl" width="660" height="370" src="https://www.youtube.com/embed/D0PfzELt5h8?si=eT_FUEePvCMPzZdH" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
         <p className="pt-3 font-lato text-xl">
           Created during Hack the North 2023
         </p>
@@ -25,12 +23,12 @@ export default function Home() {
         </p>
         <a className="pt-5" href="/demo">
           <button className="text-pink bg-teal hover:bg-teal-hover py-4 px-6 rounded-lg shadow-xl">
-            TRY IT YOURSELF
+            WATCH DEMO
           </button>
         </a>
         <a className="pt-5" href="/guide">
           <button className="text-pink bg-crimson hover:bg-crimson-hover py-2 px-4 rounded-lg shadow-xl">
-            WATCH DEMO
+            GUIDEBOOK
           </button>
         </a>
       </div>

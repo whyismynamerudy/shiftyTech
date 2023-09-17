@@ -25,3 +25,14 @@ def get_vector_from_image(image_path_internal):
     input_image = tf.image.resize_with_pad(input_image, input_size, input_size)
 
     return get_vector_from_keypoints(movenet(input_image))
+
+
+def get_vector_from_frame(frame):
+    image_tensor = tf.convert_to_tensor(frame)
+
+    # Resize and preprocess the image for MoveNet.
+    input_image = tf.expand_dims(image_tensor, axis=0)
+    input_image = tf.image.resize_with_pad(input_image, input_size, input_size)
+
+    keypoints = movenet(input_image)
+    return get_vector_from_keypoints(keypoints)

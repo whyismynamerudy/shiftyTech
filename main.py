@@ -7,6 +7,34 @@ from move_net.estimation import movenet, input_size
 from move_net.helper import draw_prediction_on_image
 import tensorflow as tf
 
+from move_net.image_utils import get_vector_from_image, get_vector_from_frame
+from move_net.search_milvus import search_for_pose
+
+import configparser
+
+from pymilvus import connections, utility
+from pymilvus import Collection
+
+# Load milvus configs
+cfp = configparser.RawConfigParser()
+cfp.read('config_serverless.ini')
+
+# Connect to milvus
+milvus_uri = cfp.get('example', 'uri')
+token = cfp.get('example', 'token')
+
+connections.connect("default",
+                    uri=milvus_uri,
+                    token=token)
+print(f"Connecting to DB: {milvus_uri}")
+
+# Check if the collection exists
+collection_name = "shifty_collection"
+check_collection = utility.has_collection(collection_name)
+print("Successfully connected to collection!")
+
+shifty_collection = Collection(collection_name)
+
 
 def main():
     url = "https://replit.com/join/fmrnbraiil-rudrakshmonga1"
@@ -38,20 +66,15 @@ def main():
         alpha = 0.6  # Adjust the transparency of the text
         cv2.addWeighted(overlay, alpha, frame, 1 - alpha, 0, frame)
 
-        # Run MoveNet inference on the current frame
-        input_image = tf.image.resize(frame, [input_size, input_size])
-        input_image = tf.expand_dims(input_image, axis=0)
-
-        keypoints_with_scores = movenet(input_image)
-
-        # Draw the keypoints onto the frame
-        frame = draw_prediction_on_image(frame, keypoints_with_scores)
-
-        cv2.imshow('frame', frame)
-
         if time_left <= 0:
             # Capture a frame and reset the start time for the next frame capture
             ret, frame = vid.read()
+
+            vector_representation = get_vector_from_frame(frame)
+            closest_pose = search_for_pose(vector_representation, shifty_collection)
+
+            print(closest_pose)
+
             start_time = time.time()
 
         # the 'q' button is set as the

@@ -14,9 +14,9 @@ function Navbar() {
                 </a>
             </div>
             <div className="flex flex-row justify-between items-center m-3">
-                <a href="/install">
+                <a href="/demo">
                 <h2 className="font-lato text-2xl pr-9">
-                    Install
+                    Demo
                 </h2>
                 </a>
                 <a href="/guide">

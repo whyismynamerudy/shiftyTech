@@ -142,7 +142,7 @@ function Guidebook() {
                     <td>
                         <Image src="/bracket.PNG" alt="Side Lunge Pose" width={700} height={700} className="rounded-md pt-7" />                    </td>
                     <td>
-                        <h2 className="pt-7 pl-7 font-han text-3xl">PARENTHESES &rpar;&lpar;</h2>
+                        <h2 className="pt-7 pl-7 font-han text-3xl">PARENTHESES &#40;&#41;</h2>
                         <p className="pt-3 pl-7 font-lato text-xl">Make a Side Lunge Pose to write a right parentheses. Make sure your hands are on your hips. For the left parentheses, precede with the NOT operator.</p>
                     </td>
                 </tr>

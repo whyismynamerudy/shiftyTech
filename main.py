@@ -2,12 +2,9 @@ import webbrowser
 import pyautogui
 import time
 import cv2
-# Assuming the helper and estimation modules are in the "move_net" directory
-from move_net.estimation import movenet, input_size
-from move_net.helper import draw_prediction_on_image
 import tensorflow as tf
 
-from move_net.image_utils import get_vector_from_image, get_vector_from_frame
+from move_net.image_utils import get_vector_from_frame
 from move_net.search_milvus import search_for_pose
 
 import configparser
@@ -15,28 +12,29 @@ import configparser
 from pymilvus import connections, utility
 from pymilvus import Collection
 
-# Load milvus configs
-cfp = configparser.RawConfigParser()
-cfp.read('config_serverless.ini')
-
-# Connect to milvus
-milvus_uri = cfp.get('example', 'uri')
-token = cfp.get('example', 'token')
-
-connections.connect("default",
-                    uri=milvus_uri,
-                    token=token)
-print(f"Connecting to DB: {milvus_uri}")
-
-# Check if the collection exists
-collection_name = "shifty_collection"
-check_collection = utility.has_collection(collection_name)
-print("Successfully connected to collection!")
-
-shifty_collection = Collection(collection_name)
-
 
 def main():
+    # Load milvus configs
+    cfp = configparser.RawConfigParser()
+    cfp.read('config_serverless.ini')
+
+    # Connect to milvus
+    milvus_uri = cfp.get('example', 'uri')
+    token = cfp.get('example', 'token')
+
+    connections.connect("default",
+                        uri=milvus_uri,
+                        token=token)
+    print(f"Connecting to DB: {milvus_uri}")
+
+    # Check if the collection exists
+    collection_name = "shifty_collection"
+    check_collection = utility.has_collection(collection_name)
+    print("Successfully connected to collection!")
+
+    shifty_collection = Collection(collection_name)
+
+
     url = "https://replit.com/join/fmrnbraiil-rudrakshmonga1"
     webbrowser.open(url)
 
@@ -58,6 +56,7 @@ def main():
         # Create an image with the same dimensions as the frame for the text overlay
         overlay = frame.copy()
 
+
         # Add text indicating the time left until the next frame capture
         text = f"Next frame in {int(time_left) + 1}"
         cv2.putText(overlay, text, (10, 60), cv2.FONT_HERSHEY_SIMPLEX, 2.5, (255, 255, 255), 2)
@@ -65,6 +64,9 @@ def main():
         # Blend the overlay text onto the frame
         alpha = 0.6  # Adjust the transparency of the text
         cv2.addWeighted(overlay, alpha, frame, 1 - alpha, 0, frame)
+
+        cv2.imshow('frame', frame)
+
 
         if time_left <= 0:
             # Capture a frame and reset the start time for the next frame capture

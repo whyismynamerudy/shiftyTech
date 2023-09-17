@@ -1,4 +1,5 @@
 pose_mapping = {
+    "def": "print(\" Not enabled \")",
     "and": " and ",
     "bracket": "( ",
     "not bracket": ") ",
